@@ -14,3 +14,12 @@ class PostOrder(Resource):
 class GetOrders(Resource):
     def get(self):
         return jsonify({"orders" : [order.virtualize() for order in food_orders]})
+
+class SingleOrder(Resource):
+    def get(self, id):
+        spec_order = CustomerOrder().retrieve_order_by_id(id)
+        
+        if spec_order:
+            return jsonify({'Order': spec_order.virtualize()}), 200
+
+        return jsonify({'Message' : "Oops! Specified Order not found in our records"}), 404
