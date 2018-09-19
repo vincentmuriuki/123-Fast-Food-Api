@@ -31,3 +31,11 @@ class SingleOrder(Resource):
             order.status="Confirmed"
             return jsonify({'Message' : 'Order approved!'}), 200
         return jsonify({'Message' : 'Oops! Specified Order not found in our records!'}), 404
+
+    def delete(self, id):
+        spec_order = CustomerOrder().retrieve_order_by_id(id)
+
+        if spec_order:
+            food_orders.remove(spec_order)
+            return jsonify({'Message' : 'Requested Order deleted successfully!'}),200
+        return jsonify({'Message' : 'Oops! Requested Order not found in our records! Try a different ID!'}, 404
