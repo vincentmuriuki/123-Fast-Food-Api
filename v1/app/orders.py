@@ -10,3 +10,7 @@ class PostOrder(Resource):
         food_orders.append(order)
 
         return jsonify({'Message' : 'Congratulations. Your new order has been posted. Kindly wait!'}), 201
+
+class GetOrders(Resource):
+    def get(self):
+        return jsonify({"orders" : [order.virtualize() for order in food_orders]})
