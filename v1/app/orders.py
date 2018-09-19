@@ -23,3 +23,11 @@ class SingleOrder(Resource):
             return jsonify({'Order': spec_order.virtualize()}), 200
 
         return jsonify({'Message' : "Oops! Specified Order not found in our records"}), 404
+
+    def put(self, id):
+        order = CustomerOrder().retrieve_order_by_id(id)
+
+        if order:
+            order.status="Confirmed"
+            return jsonify({'Message' : 'Order approved!'}), 200
+        return jsonify({'Message' : 'Oops! Specified Order not found in our records!'}), 404
